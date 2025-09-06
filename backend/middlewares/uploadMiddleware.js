@@ -32,3 +32,14 @@ function checkFileType(file, cb) {
     cb("Error: Images Only!");
   }
 }
+
+// Initialize upload
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 2 * 1024 * 1024 }, // 2MB limit
+  fileFilter: function (req, file, cb) {
+    checkFileType(file, cb);
+  },
+}).single("coverImage"); // Field name for the uploaded file
+
+module.exports = upload;
