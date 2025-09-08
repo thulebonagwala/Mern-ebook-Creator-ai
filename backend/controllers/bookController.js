@@ -24,3 +24,15 @@ const createBook = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// @desc    Get all books for a user
+// @route   GET /api/books
+// @access  Private
+const getBooks = async (req, res) => {
+  try {
+    const books = await Book.find({ userId: req.user._id }).sort({ createdAt: -1 });
+    res.status(200).json(books);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
