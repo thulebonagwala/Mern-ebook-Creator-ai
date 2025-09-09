@@ -247,3 +247,46 @@ const processMarkdownToDocx = (markdown) => {
 
   return paragraphs;
 };
+
+// Process inline content (bold, italic, text)
+const processInlineContent = (children) => {
+  const textRuns = [];
+  let currentFormatting = { bold: false, italic: false };
+  let textBuffer = "";
+
+  const flushText = () => {
+    if (textBuffer.trim()) {
+      textRuns.push(
+        new TextRun({
+          text: textBuffer,
+          bold: currentFormatting.bold,
+          italics: currentFormatting.italic,
+          font: DOCX_STYLES.fonts.body,
+          size: DOCX_STYLES.sizes.body * 2,
+        })
+      );
+      textBuffer = "";
+    }
+  };
+
+  children.forEach((child) => {
+    if (child.type === "strong_open") {
+      flushText();
+      currentFormatting.bold = true;
+    } else if (child.type === "strong_close") {
+      flushText();
+      currentFormatting.bold = false;
+    } else if (child.type === "em_open") {
+      flushText();
+      currentFormatting.italic = true;
+    } else if (child.type === "em_close") {
+      flushText();
+      currentFormatting.italic = false;
+    } else if (child.type === "text") {
+      textBuffer += child.content;
+    }
+  });
+
+  flushText();
+  return textRuns;
+};
