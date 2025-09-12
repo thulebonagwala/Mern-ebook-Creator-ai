@@ -83,6 +83,28 @@ const updateBook = async (req, res) => {
   }
 };
 
+// @desc    Delete a book
+// @route   DELETE /api/books/:id
+// @access  Private
+const deleteBook = async (req, res) => {
+  try {
+     const book = await Book.findById(req.params.id);
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    if (book.userId.toString() !== req.user._id.toString()) {
+      return res.status(401).json({ message: "Not authorized to delete this book" });
+    }
+
+    await book.deleteOne();
+
+    res.status(200).json({ message: "Book deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
 // @desc    Update a book's cover image
 // @route   PUT /api/books/cover/:id
 // @access  Private
