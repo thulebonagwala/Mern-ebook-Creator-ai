@@ -20,7 +20,26 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, formData);
+      const { token } = response.data;
+      
+      // Fetch profile to get user details
+      const profileResponse = await axiosInstance.get(API_PATHS.AUTH.GET_PROFILE, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      login(profileResponse.data, token);
+      toast.success("Login successful!");
+      navigate("/dashboard");
+    } catch (error) {
+      localStorage.clear()
+      toast.error(error.response?.data?.message || "Login failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
