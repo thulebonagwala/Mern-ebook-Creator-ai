@@ -20,7 +20,26 @@ const SignupPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, formData);
+      const { token } = response.data;
+
+      // Fetch profile to get user details
+      const profileResponse = await axiosInstance.get(API_PATHS.AUTH.GET_PROFILE, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      login(profileResponse.data, token);
+      toast.success("Account created successfully!");
+      navigate("/dashboard");
+
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Signup failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
