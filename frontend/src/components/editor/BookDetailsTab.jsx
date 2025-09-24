@@ -40,3 +40,5 @@ const BookDetailsTab = ({
       </div>
     </div>
 };
+
+export default BookDetailsTab;

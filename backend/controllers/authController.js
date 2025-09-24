@@ -13,7 +13,6 @@ const generateToken = (id) => {
 // @access  Public
 exports.registerUser = async (req, res) => {
   const { name, email, password } = req.body;
-
   try {
     if (!name || !email || !password) {
       return res.status(400).json({ message: "Please fill all fields" });

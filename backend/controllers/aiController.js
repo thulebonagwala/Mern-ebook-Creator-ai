@@ -1,11 +1,12 @@
 const { GoogleGenAI } = require("@google/genai");
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY});//
 
 // @desc    Generate a book outline
 // @route   POST /api/ai/generate-outline
 // @access  Private
 const generateOutline = async (req, res) => {
+  console.log("Entered");
   try {
     const { topic, style, numChapters, description } = req.body;
 

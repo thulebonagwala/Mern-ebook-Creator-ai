@@ -39,7 +39,7 @@ const Footer = () => {
                 <Linkedin className="w-5 h-5" />
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/thulebonagwala/Mern-ebook-Creator-ai"
                 className="w-10 h-10 bg-white/5 hover:bg-violet-600 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
                 aria-label="GitHub"
               >
