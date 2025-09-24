@@ -1,9 +1,9 @@
 # eBook-Creator-ai  
 _A full-stack AI-powered eBook creator built with the MERN stack_
-_Website:_
+_Website:thulebonagwala-ebookapp.netlify.app_
 _Demo Login:_
 email: thule_10@hotmail.com
-Password: test@123
+Password: Test@123
 
 
 ## Table of Contents  
