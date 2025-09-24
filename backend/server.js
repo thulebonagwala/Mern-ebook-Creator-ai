@@ -30,6 +30,9 @@ app.use(express.json());
 // Static folder for uploads
 app.use("/backend/uploads", express.static(path.join(__dirname, "uploads")));
 
+// simple health check
+app.get("/health", (req, res) => res.json({ ok: true }));
+
 // Routes Here
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
